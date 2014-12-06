@@ -2,10 +2,11 @@
 require 'net/http'
 require 'json'
 require 'colorize'
+require 'highline/import'
 
-base_url = 'x'
-$username = 'x'
-$password = 'x'
+base_url  = ask("Stash URL: ") { |q| q.echo = true }
+$username = ask("Username:  ") { |q| q.echo = true }
+$password = ask("Password:  ") { |q| q.echo = "*" }
 
 def request(url) 
 	uri = URI(url)
@@ -22,6 +23,12 @@ end
 puts 'Scanning projects...'.light_yellow
 
 projects = request("#{base_url}/rest/api/1.0/projects?limit=100")
+
+if projects['errors'] 
+	puts projects['errors'].map{|e| e['message']}.join('. ')
+	exit -1
+end
+
 projects['values'].each do |p|
 	puts "  - #{p['name']}...".light_yellow
 	project = request("#{base_url}/rest/api/1.0/projects/#{p['key']}/repos")
