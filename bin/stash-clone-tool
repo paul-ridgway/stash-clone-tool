@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'bundler/setup'
 require 'stash_clone_tool/stash_cloner'
 require 'optparse'
