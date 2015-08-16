@@ -6,8 +6,8 @@ require 'stash_clone_tool/version'
 Gem::Specification.new do |spec|
   spec.name          = 'stash-clone-tool'
   spec.version       = StashCloneTool::VERSION
-  spec.authors       = ['Paul Ridgway']
-  spec.email         = ['paul@thefloow.com']
+  spec.authors       = ['Paul Ridgway', 'James Ridgway', 'Douglas Mills']
+  spec.email         = ['paul@thefloow.com', 'james.ridgway@thefloow.com', 'douglas.mills@thefloow.com']
 
   spec.summary       = 'Tool for cloning all projects from a Stash server.'
   spec.description   = 'Tool for cloning all projects from a Stash server.'
