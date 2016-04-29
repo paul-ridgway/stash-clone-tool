@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stash-clone-tool (1.0.2)
+    stash-clone-tool (1.0.3)
       colorize (~> 0.7.7)
       git (~> 1.2.9.1)
       highline (~> 1.7.3)
@@ -12,7 +12,7 @@ GEM
   specs:
     colorize (0.7.7)
     git (1.2.9.1)
-    highline (1.7.3)
+    highline (1.7.8)
     multiblock (0.2.1)
     rake (10.4.2)
 
@@ -25,4 +25,4 @@ DEPENDENCIES
   stash-clone-tool!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

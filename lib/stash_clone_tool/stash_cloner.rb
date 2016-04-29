@@ -15,7 +15,7 @@ module StashCloneTool
       @directory = directory
     end
 
-    def clone_stash
+    def clone_stash(clone_options)
       wrapper = Multiblock.wrapper
       yield(wrapper)
       @stash.projects.each do |project|
@@ -26,7 +26,7 @@ module StashCloneTool
           if Dir.exists?(folder)
             wrapper.call(:failure, repository, 'Target already exists')
           else
-            Git.clone(clone_link, folder)
+            Git.clone(clone_link, folder, clone_options)
             wrapper.call(:success, repository)
           end
         end
