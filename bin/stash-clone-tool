@@ -1,0 +1,30 @@
+require 'bundler/setup'
+require 'stash_clone_tool/stash_cloner'
+require 'optparse'
+require 'highline/import'
+options = {directory: '.'}
+cli = OptionParser.new do |opts|
+  opts.banner = 'Usage: stash-clone-tool [options]'
+  opts.on('-s', '--stash URL', 'Stash Server URL (required)') do |stash_url|
+    options[:stash_url] = stash_url
+  end
+  opts.on('-u', '--username USERNAME', 'Stash username (required)') do |username|
+    options[:username] = username
+  end
+  opts.on('-p', '--password PASSWORD', 'Stash password') do |password|
+    options[:password] = password
+  end
+  opts.on('-d', '--directory DIRECTORY_PATH', 'Path to clone stash projects into (default: working directory).') do |directory|
+    options[:directory] = directory
+  end
+end.parse!
+
+fail 'Must specify Stash server URL (-s).' if options[:stash_url].nil?
+fail 'Must specify Stash username (-u).' if options[:username].nil?
+
+# Prompt for password if not provided on CLI
+options[:password] ||= ask('Password:  ') { |q| q.echo = '*' }
+
+# TODO: Write CLI
+cloner = StashCloneTool::StashCloner.new(options[:stash_url], options[:username], options[:password], options[:directory])
+cloner.go

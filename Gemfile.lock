@@ -1,12 +1,24 @@
+PATH
+  remote: .
+  specs:
+    stash-clone-tool (1.0.0)
+      colorize
+      highline
+
 GEM
   remote: https://rubygems.org/
   specs:
-    colorize (0.7.3)
-    highline (1.6.21)
+    colorize (0.7.7)
+    highline (1.7.2)
+    rake (10.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  colorize
-  highline
+  bundler (~> 1.10)
+  rake (~> 10.0)
+  stash-clone-tool!
+
+BUNDLED WITH
+   1.10.5
