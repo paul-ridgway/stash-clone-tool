@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'bundler/setup'
 require 'stash_clone_tool/stash_cloner'
 require 'optparse'
@@ -25,6 +27,22 @@ fail 'Must specify Stash username (-u).' if options[:username].nil?
 # Prompt for password if not provided on CLI
 options[:password] ||= ask('Password:  ') { |q| q.echo = '*' }
 
-# TODO: Write CLI
+@last_project = nil
 cloner = StashCloneTool::StashCloner.new(options[:stash_url], options[:username], options[:password], options[:directory])
-cloner.go
+
+cloner.clone_stash do |on|
+  on.initialize_repository do |repository, folder|
+    if @last_project != repository.project
+      puts "  - #{repository.project.name}...".light_yellow
+      @last_project = repository.project
+    end
+    puts "    - #{repository.name}...".light_yellow
+    puts "        Cloning ".light_blue + repository.clone_link(:ssh).light_white + " to ".light_blue + folder.light_white
+  end
+  on.success do |repository|
+    puts "        Cloned".light_green
+  end
+  on.failure do |repository, message|
+    puts "        #{message}".light_red
+  end
+end
