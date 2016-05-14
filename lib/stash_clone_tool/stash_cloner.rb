@@ -15,10 +15,11 @@ module StashCloneTool
       @directory = directory
     end
 
-    def clone_stash(clone_options)
+    def clone_stash(clone_options, exclude = [])
       wrapper = Multiblock.wrapper
       yield(wrapper)
       @stash.projects.each do |project|
+        next if exclude.include?(project.key)
         project.repositories.each do |repository|
           folder = File.join(@directory, project.key, repository.slug)
           wrapper.call(:initialize_repository, repository, folder)

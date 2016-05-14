@@ -6,6 +6,7 @@ require 'optparse'
 require 'highline/import'
 options = {directory: '.'}
 clone_options = {}
+exclude = []
 cli = OptionParser.new do |opts|
   opts.banner = 'Usage: stash-clone-tool [options]'
   opts.on('-s', '--stash URL', 'Stash Server URL (required)') do |stash_url|
@@ -23,6 +24,9 @@ cli = OptionParser.new do |opts|
   opts.on('--depth DEPTH', 'Clone depth (assumes single branch unless --no-single-branch).') do |depth|
     clone_options[:depth] = depth
   end
+  opts.on("--exclude AN,PS,JU", Array, "Project keys to exclude") do |list|
+    list.each { |key| exclude << key }
+  end
 end.parse!
 
 fail 'Must specify Stash server URL (-s).' if options[:stash_url].nil?
@@ -34,10 +38,10 @@ options[:password] ||= ask('Password:  ') { |q| q.echo = '*' }
 @last_project = nil
 cloner = StashCloneTool::StashCloner.new(options[:stash_url], options[:username], options[:password], options[:directory])
 
-cloner.clone_stash(clone_options) do |on|
+cloner.clone_stash(clone_options, exclude) do |on|
   on.initialize_repository do |repository, folder|
     if @last_project != repository.project
-      puts "  - #{repository.project.name}...".light_yellow
+      puts "  - #{repository.project.name} (#{repository.project.name}...".light_yellow
       @last_project = repository.project
     end
     puts "    - #{repository.name}...".light_yellow
