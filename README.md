@@ -1,4 +1,4 @@
-![build status](https://travis-ci.org/paul-ridgway/stash-clone-tool.svg?branch=master "Build Status")
+[![Build Status][https://travis-ci.org/paul-ridgway/stash-clone-tool]](https://travis-ci.org/paul-ridgway/stash-clone-tool.svg?branch=master "Build Status")
 
 # Stash Clone Tool
 Clones all repositories in all projects a user has access to from a stash server.
