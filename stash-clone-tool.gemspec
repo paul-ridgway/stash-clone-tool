@@ -13,13 +13,8 @@ Gem::Specification.new do |spec|
   spec.description   = 'Tool for cloning all projects from a Stash server.'
   spec.homepage      = 'https://github.com/paul-ridgway/stash-clone-tool'
 
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "https://rubygems.org"
-  else
-    fail 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
-  end
+  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
+  raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.' unless spec.respond_to?(:metadata)
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'bin'
@@ -28,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rubocop'
   spec.add_runtime_dependency 'colorize', '~> 0.7.7'
   spec.add_runtime_dependency 'highline', '~> 1.7', '>= 1.7.3'
   spec.add_runtime_dependency 'git', '~> 1.2', '>= 1.2.9.1'

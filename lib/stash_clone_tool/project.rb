@@ -1,6 +1,5 @@
 module StashCloneTool
   class Project
-
     attr_reader :name, :key, :repositories
 
     def initialize(client, json)

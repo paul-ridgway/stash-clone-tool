@@ -6,7 +6,7 @@ module StashCloneTool
 
     def initialize(project, repo)
       @name = repo['name']
-      @clone_links = repo['links']['clone'].map{ |link| CloneLink.new(link)}
+      @clone_links = repo['links']['clone'].map { |link| CloneLink.new(link) }
       @slug = repo['slug']
       @project = project
     end
