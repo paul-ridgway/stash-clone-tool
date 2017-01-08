@@ -4,10 +4,10 @@ require 'bundler/setup'
 require 'stash_clone_tool/stash_cloner'
 require 'optparse'
 require 'highline/import'
-options = {directory: '.'}
+options = { directory: '.' }
 clone_options = {}
 exclude = []
-cli = OptionParser.new do |opts|
+OptionParser.new do |opts|
   opts.banner = 'Usage: stash-clone-tool [options]'
   opts.on('-s', '--stash URL', 'Stash Server URL (required)') do |stash_url|
     options[:stash_url] = stash_url
@@ -18,39 +18,41 @@ cli = OptionParser.new do |opts|
   opts.on('-p', '--password PASSWORD', 'Stash password') do |password|
     options[:password] = password
   end
-  opts.on('-d', '--directory DIRECTORY_PATH', 'Path to clone stash projects into (default: working directory).') do |directory|
+  opts.on('-d', '--directory PATH', 'Path to clone stash projects into (default: working directory).') do |directory|
     options[:directory] = directory
   end
   opts.on('--depth DEPTH', 'Clone depth (assumes single branch unless --no-single-branch).') do |depth|
     clone_options[:depth] = depth
   end
-  opts.on("--exclude AN,PS,JU", Array, "Project keys to exclude") do |list|
+  opts.on('--exclude KEY1,KEY2,...', Array, 'Project keys to exclude') do |list|
     list.each { |key| exclude << key }
   end
 end.parse!
 
-fail 'Must specify Stash server URL (-s).' if options[:stash_url].nil?
-fail 'Must specify Stash username (-u).' if options[:username].nil?
+raise 'Must specify Stash server URL (-s).' if options[:stash_url].nil?
+raise 'Must specify Stash username (-u).' if options[:username].nil?
 
 # Prompt for password if not provided on CLI
 options[:password] ||= ask('Password:  ') { |q| q.echo = '*' }
 
-@last_project = nil
-cloner = StashCloneTool::StashCloner.new(options[:stash_url], options[:username], options[:password], options[:directory])
+last_project = nil
+cloner = StashCloneTool::StashCloner.new(options[:stash_url], options[:username], options[:password],
+                                         options[:directory])
 
 cloner.clone_stash(clone_options, exclude) do |on|
   on.initialize_repository do |repository, folder|
-    if @last_project != repository.project
+    if last_project != repository.project
       puts "  - #{repository.project.name} (#{repository.project.name}...".light_yellow
-      @last_project = repository.project
+      last_project = repository.project
     end
     puts "    - #{repository.name}...".light_yellow
-    puts "        Cloning ".light_blue + repository.clone_link(:ssh).light_white + " to ".light_blue + folder.light_white
+    puts '        Cloning '.light_blue + repository.clone_link(:ssh).light_white + ' to '.light_blue +
+             folder.light_white
   end
-  on.success do |repository|
-    puts "        Cloned".light_green
+  on.success do |_|
+    puts '        Cloned'.light_green
   end
-  on.failure do |repository, message|
+  on.failure do |_, message|
     puts "        #{message}".light_red
   end
 end

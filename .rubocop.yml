@@ -1,0 +1,14 @@
+Metrics/LineLength:
+  Max: 120
+Metrics/MethodLength:
+    Max: 40
+Metrics/AbcSize:
+  Enabled: false
+Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/AlignHash:
+  Enabled: false
+Style/MultilineOperationIndentation:
+  Enabled: false

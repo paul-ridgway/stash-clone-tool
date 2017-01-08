@@ -25,16 +25,19 @@ module StashCloneTool
       uri = URI("#{@stash_url}#{url}")
       req = Net::HTTP::Get.new(uri.to_s)
       req.basic_auth @username, @password
-      response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
         http.request(req)
       end
-      json = JSON.parse(response.body)
+      process_response(response.body)
+    end
+
+    def process_response(body)
+      json = JSON.parse(body)
       if json['errors']
         error_msg = json['errors'].map { |e| e['message'] }.join('. ')
-        raise StashException.new(error_msg)
+        raise StashException, error_msg
       end
       json
     end
-
   end
 end

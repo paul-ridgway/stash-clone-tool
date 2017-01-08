@@ -1,4 +1,4 @@
 module StashCloneTool
-  class StashException < Exception
+  class StashException < RuntimeError
   end
 end

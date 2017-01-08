@@ -1,0 +1,15 @@
+PreCommit:
+  BundleCheck:
+    enabled: true
+  FixMe:
+    enabled: true
+    keywords: ["FIXME", "TODO"]
+    exclude:
+      - .overcommit.yml
+  RuboCop:
+    enabled: true
+    on_warn: fail
+    command: ['bundle', 'exec', 'rubocop']
+PrePush:
+  RSpec:
+    enabled: true
