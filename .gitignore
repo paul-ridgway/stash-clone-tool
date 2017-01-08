@@ -1,8 +1,9 @@
-/.idea
+/*.gem
 /.bundle/
-/Gemfile.lock
+/.idea
+/coverage/
 /doc/
+/Gemfile.lock
 /pkg/
 /spec/reports/
 /tmp/
-/*.gem
