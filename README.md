@@ -7,7 +7,7 @@ Simple to use, enter the stash url, username and password.
 
 Feel free to contribute at https://github.com/paul-ridgway/stash-clone-tool.
 
-# Usage
+## Usage
 Install the stash clone tool:
 
     gem install stash-clone-tool
@@ -18,3 +18,17 @@ You can now clone all repositories in all the projects you have access to:
 
 Omit the password argument (-p) to enter your password via masked standard input.
 
+## Development
+stash-clone-tool uses rubocop and overcommit to ensure build quality.
+
+To enable overcommit:
+
+    $ overcommit && overcommit --sign
+    
+To check code style:
+
+    $ bundle exec rubocop
+
+The project can be build (which also runs rubocop), using:
+
+    $ bundle exec rake
