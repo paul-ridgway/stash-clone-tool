@@ -28,7 +28,11 @@ module StashCloneTool
       response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
         http.request(req)
       end
-      json = JSON.parse(response.body)
+      process_response(response.body)
+    end
+
+    def process_response(body)
+      json = JSON.parse(body)
       if json['errors']
         error_msg = json['errors'].map { |e| e['message'] }.join('. ')
         raise StashException, error_msg
