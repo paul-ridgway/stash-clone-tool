@@ -16,7 +16,9 @@ module StashCloneTool
     end
 
     def get_repositories(project)
-      request("/rest/api/1.0/projects/#{project.key}/repos")['values'].map { |json| StashRepository.new(project, json) }
+      request("/rest/api/1.0/projects/#{project.key}/repos?limit=100")['values'].map do |json|
+        StashRepository.new(project, json)
+      end
     end
 
     private
