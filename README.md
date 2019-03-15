@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/paul-ridgway/stash-clone-tool.svg?branch=master)](https://travis-ci.org/paul-ridgway/stash-clone-tool) 
 
 # Stash Clone Tool
-Clones all repositories in all projects a user has access to from a stash server.
+Clones all repositories in all projects a user has access to from a stash/bitbucket server.
 
 Simple to use, enter the stash url, username and password.
 
